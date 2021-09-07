@@ -5,7 +5,7 @@
     <artifactId>obstmusic</artifactId>
     <packaging>jar</packaging>
     <name>Obstmusic</name>
-    <version>0.9.0-SNAPSHOT</version>
+    <version>0.9.0</version>
     <description>Java API for the Apple Music app (macOS).</description>
     <url>https://www.tagtraum.com/</url>
     <inceptionYear>2021</inceptionYear>
