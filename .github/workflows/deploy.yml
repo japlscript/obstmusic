@@ -40,11 +40,15 @@ jobs:
 
       - id: publish-to-central
         name: Publish to Central Repository
+        shell: bash
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           GPG_TTY: $(tty)
+        # Manipulate TCC, see https://github.com/actions/virtual-environments/issues/553#issuecomment-648109166
+        # in order to allow AppleScript automation of Music.app
         run: |
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 1, 1, 0, 'com.apple.Music')"
           mvn \
             --no-transfer-progress \
             --batch-mode \
