@@ -27,7 +27,12 @@ jobs:
           architecture: x64
 
       - name: Build/test code with Maven
-        run: mvn -B install --file pom.xml
+        shell: bash
+        run: |
+        # attempt to manipulate TCC, see https://github.com/actions/virtual-environments/issues/553#issuecomment-648109166
+        # in order to allows AppleScript automation of Music.app
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 1, 1, 0, 'com.apple.music')"
+          mvn -B install --file pom.xml
       - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v2
         with:
