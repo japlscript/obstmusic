@@ -1,0 +1,24 @@
+<project default="japlscript">
+    <target name="japlscript">
+        <mkdir dir="${project.build.directory}/generated-sources/main/java"/>
+
+        <taskdef name="japlscript"
+                 classname="com.tagtraum.japlscript.generation.Generator"
+                 classpathref="maven.compile.classpath"/>
+
+        <japlscript application="Music"
+                    module="tagtraum.obstmusic"
+                    sdef="${basedir}/src/main/japlscript/Music.sdef"
+                    out="${project.build.directory}/generated-sources/main/java"
+                    packagePrefix="com.tagtraum.macos">
+        </japlscript>
+
+        <!-- manually fix some cardinality of some command return values -->
+        <replace file="${project.build.directory}/generated-sources/main/java/com/tagtraum/macos/music/Application.java"
+                 token="Track search("
+                 value="Track[] search("/>
+        <replace file="${project.build.directory}/generated-sources/main/java/com/tagtraum/macos/music/Application.java"
+                 token="Track convert("
+                 value="Track[] convert("/>
+    </target>
+</project>
