@@ -43,3 +43,7 @@ public class PlayPause {
     }
 }
 ```
+
+## API
+
+You can find the complete API [here](https://hendriks73.github.io/obstmusic/com/tagtraum/macos/music/package-summary.html). 
