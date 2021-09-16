@@ -11,7 +11,7 @@
 
 ## Installation
 
-Obstunes is released via [Maven](https://maven.apache.org).
+Obstmusic is released via [Maven](https://maven.apache.org).
 You can install it via the following dependency:
 
 ```xml

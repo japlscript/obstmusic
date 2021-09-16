@@ -3,7 +3,7 @@
         <mkdir dir="${project.build.directory}/generated-sources/main/java"/>
 
         <taskdef name="japlscript"
-                 classname="com.tagtraum.japlscript.generation.Generator"
+                 classname="com.tagtraum.japlscript.generation.GeneratorAntTask"
                  classpathref="maven.compile.classpath"/>
 
         <japlscript application="Music"
