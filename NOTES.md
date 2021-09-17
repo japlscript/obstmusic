@@ -1,6 +1,6 @@
 - 0.9.1
 
-  - Moved to JaplScript 3.4.3
+  - Moved to JaplScript 3.4.4
 
  
 - 0.9.0
