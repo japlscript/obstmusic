@@ -16,7 +16,7 @@ jobs:
 
     # Unfortunately, GitHub silently ignores, if we set it to macos-10.14,
     # which is what we actually want. :-/
-    runs-on: macos-latest
+    runs-on: macos-10.15
 
     steps:
       - uses: actions/checkout@v2
