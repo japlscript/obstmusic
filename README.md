@@ -96,6 +96,44 @@ public class GetCurrentArtwork {
 }
 ```
 
+Or this:
+
+```java
+import com.tagtraum.macos.music.Application;
+import com.tagtraum.japlscript.Reference;
+import com.tagtraum.japlscript.execution.JaplScriptException;
+import com.tagtraum.japlscript.language.Tdta;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class AddArtworkToCurrentTrack {
+
+    public static void main(final String[] args) throws IOException {
+        // path to artwork should be the first argument
+        final Path newArtworkFile = Paths.get(args[0]);
+        
+        final Application application = Application.getInstance();
+        
+        // get currently playing track
+        final Track currentTrack = application.getCurrentTrack();
+
+        // get the index of the artwork *after* the last artwork
+        final int addIndex = currentTrack.countArtworks();
+        // create a location specifier for the new artwork
+        final Artwork newArtwork = currentTrack.getArtwork(addIndex);
+
+        // read the artwork file as type data (tdta)
+        final Tdta tdta = new Tdta(newArtworkFile, newArtwork.getApplicationReference());
+        // fill the artwork with data, which effectively stores it
+        // to do so, we need to cast to Picture, to please static typing 
+        newArtwork.setData(tdta.cast(Picture.class));
+    }
+}
+```
+
 ## API
 
 You can find the complete [API here](https://hendriks73.github.io/obstmusic/com/tagtraum/macos/music/package-summary.html). 
