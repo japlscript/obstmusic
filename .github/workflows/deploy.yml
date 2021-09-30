@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Ensure git case-sensitivity
-      - run: |
+        run: |
           git config --global core.ignorecase true
 
       - id: install-secret-key
