@@ -1,3 +1,8 @@
+- 0.9.3
+
+  - Moved to JaplScript 3.4.8
+  - Added another example to `README.md`
+
 - 0.9.2
 
   - Moved to JaplScript 3.4.7

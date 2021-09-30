@@ -44,6 +44,96 @@ public class PlayPause {
 }
 ```
 
+Or this:
+
+```java
+import com.tagtraum.macos.music.Application;
+import com.tagtraum.japlscript.Reference;
+import com.tagtraum.japlscript.execution.JaplScriptException;
+import com.tagtraum.japlscript.language.Tdta;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class GetCurrentArtwork {
+
+    public static void main(final String[] args) throws IOException {
+        final Application application = Application.getInstance();
+        try {
+            final Track currentTrack = application.getCurrentTrack();
+            final Artwork[] artworks = currentTrack.getArtworks();
+            if (artworks.length > 0) {
+                final Artwork artwork = artworks[0];
+                final Reference rawData = artwork.getRawData();
+                if (rawData != null) {
+
+                    // get image data
+                    final Tdta tdta = rawData.cast(Tdta.class);
+                    final byte[] imageData = tdta.getTdta();
+
+                    // get image format
+                    final String format = artwork.getFormat().getObjectReference().toLowerCase();
+                    final String extension;
+                    if (format.contains("png")) extension = ".png";
+                    else if (format.contains("tiff")) extension = ".tiff";
+                    else if (format.contains("gif")) extension = ".gif";
+                    else if (format.contains("bmp")) extension = ".bmp";
+                    else if (format.contains("pdf")) extension = ".pdf";
+                    else extension = ".jpeg";
+
+                    // write image file
+                    final Path artworkPath = Paths.get("current_artwork" + extension);
+                    System.out.println("Writing artwork to file " + artworkPath);
+                    Files.write(artworkPath, imageData);
+                }
+            }
+        } catch (JaplScriptException e) {
+            System.out.println("No track loaded (we assume).");
+        }
+    }
+}
+```
+
+Or this:
+
+```java
+import com.tagtraum.macos.music.Application;
+import com.tagtraum.japlscript.Reference;
+import com.tagtraum.japlscript.execution.JaplScriptException;
+import com.tagtraum.japlscript.language.Tdta;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class AddArtworkToCurrentTrack {
+
+    public static void main(final String[] args) throws IOException {
+        // path to artwork should be the first argument
+        final Path newArtworkFile = Paths.get(args[0]);
+        
+        final Application application = Application.getInstance();
+        
+        // get currently playing track
+        final Track currentTrack = application.getCurrentTrack();
+
+        // get the index of the artwork *after* the last artwork
+        final int addIndex = currentTrack.countArtworks();
+        // create a location specifier for the new artwork
+        final Artwork newArtwork = currentTrack.getArtwork(addIndex);
+
+        // read the artwork file as type data (tdta)
+        final Tdta tdta = new Tdta(newArtworkFile, newArtwork.getApplicationReference());
+        // fill the artwork with data, which effectively stores it
+        // to do so, we need to cast to Picture, to please static typing 
+        newArtwork.setData(tdta.cast(Picture.class));
+    }
+}
+```
+
 ## API
 
 You can find the complete [API here](https://hendriks73.github.io/obstmusic/com/tagtraum/macos/music/package-summary.html). 
