@@ -21,10 +21,6 @@ jobs:
     runs-on: macos-10.15
 
     steps:
-      - name: Ensure git case-sensitivity
-        run: |
-          git config --global core.ignorecase true
-
       - id: install-secret-key
         name: Install gpg secret key
         run: |
@@ -42,31 +38,23 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
-      - name: Build/test code with Maven
+      - id: publish-to-central
+        name: Publish to Central Repository
         shell: bash
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          GPG_TTY: $(tty)
         # Manipulate TCC, see https://github.com/actions/virtual-environments/issues/553#issuecomment-648109166
         # in order to allow AppleScript automation of Music.app
         run: |
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 1, 1, 0, 'com.apple.Music')"
-          mvn -B install --file pom.xml
-
-#      - id: publish-to-central
-#        name: Publish to Central Repository
-#        shell: bash
-#        env:
-#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-#          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-#          GPG_TTY: $(tty)
-#        # Manipulate TCC, see https://github.com/actions/virtual-environments/issues/553#issuecomment-648109166
-#        # in order to allow AppleScript automation of Music.app
-#        run: |
-#          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 1, 1, 0, 'com.apple.Music')"
-#          mvn \
-#            --no-transfer-progress \
-#            --batch-mode \
-#            -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
-#            -P release \
-#            clean deploy --file pom.xml
+          mvn \
+            --no-transfer-progress \
+            --batch-mode \
+            -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
+            -P release \
+            clean deploy --file pom.xml
 
       # deploy javadocs to github pages
       - name: Deploy Javadocs to GitHub Pages Branch
