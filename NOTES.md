@@ -1,3 +1,8 @@
+- 0.9.4
+ 
+  - Moved GitHub repository to https://github.com/japlscript/obstmusic 
+
+
 - 0.9.3
 
   - Moved to JaplScript 3.4.8

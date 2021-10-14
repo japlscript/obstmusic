@@ -1,12 +1,12 @@
 [![LGPL 2.1](https://img.shields.io/badge/License-LGPL_2.1-blue.svg)](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.tagtraum/obstmusic/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.tagtraum/obstmusic)
-[![Build and Test](https://github.com/hendriks73/obstmusic/workflows/Build%20and%20Test/badge.svg)](https://github.com/hendriks73/obstmusic/actions)
+[![Build and Test](https://github.com/japlscript/obstmusic/workflows/Build%20and%20Test/badge.svg)](https://github.com/japlscript/obstmusic/actions)
 
 
 # Obstmusic
 
 *Obstmusic* is a Java API for the Apple Music app (macOS) based on
-[JaplScript](https://github.com/hendriks73/japlscript).
+[JaplScript](https://github.com/japlscript/japlscript).
 
 
 ## Installation
@@ -136,7 +136,7 @@ public class AddArtworkToCurrentTrack {
 
 ## API
 
-You can find the complete [API here](https://hendriks73.github.io/obstmusic/com/tagtraum/macos/music/package-summary.html). 
+You can find the complete [API here](https://japlscript.github.io/obstmusic/com/tagtraum/macos/music/package-summary.html). 
 
 
 ## AppleScript Sandbox
