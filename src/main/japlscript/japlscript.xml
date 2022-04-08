@@ -20,5 +20,8 @@
         <replace file="${project.build.directory}/generated-sources/main/java/com/tagtraum/macos/music/Application.java"
                  token="Track convert("
                  value="Track[] convert("/>
+        <replace file="${project.build.directory}/generated-sources/main/java/com/tagtraum/macos/music/Application.java"
+                 token="Track add("
+                 value="Track[] add("/>
     </target>
 </project>
