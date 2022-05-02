@@ -23,5 +23,42 @@
         <replace file="${project.build.directory}/generated-sources/main/java/com/tagtraum/macos/music/Application.java"
                  token="Track add("
                  value="Track[] add("/>
+
+        <!-- artificially add helper method to aff artwork to track -->
+        <replace file="${project.build.directory}/generated-sources/main/java/com/tagtraum/macos/music/Track.java">
+            <replacetoken><![CDATA[getProperties();
+]]></replacetoken>
+            <replacevalue><![CDATA[getProperties();
+
+/**
+ * Convenience method to add an artwork file to this track.
+ *
+ * <p> Note that this method executes three AppleScript calls
+ * and must not be called from inside an active {@link com.tagtraum.japlscript.execution.Session}.
+ *
+ * @param artworkFile artwork file
+ * @return added Artwork instance
+ * @throws java.io.IOException if the artwork file cannot be read
+ * @throws IllegalStateException if this method is called from inside an active session
+ */
+default Artwork addArtwork(final java.nio.file.Path artworkFile) throws java.io.IOException {
+    if (com.tagtraum.japlscript.execution.Session.getSession() != null) {
+        throw new IllegalStateException("Cannot add artwork from within an active session. Call session.commit() first.");
+    }
+    // get the index of the artwork *after* the last artwork
+    final int addIndex = this.countArtworks();
+    // create a location specifier for the new artwork
+    final Artwork newArtwork = this.getArtwork(addIndex);
+    // read the artwork file as type data (tdta)
+    final com.tagtraum.japlscript.language.Tdta tdta = new com.tagtraum.japlscript.language.Tdta(artworkFile, newArtwork.getApplicationReference());
+    // fill the artwork with data, which effectively stores it
+    // to do so, we need to cast to Picture, to please static typing
+    newArtwork.setData(tdta.cast(com.tagtraum.japlscript.language.Picture.class));
+    return newArtwork;
+}
+]]></replacevalue>
+        </replace>
+
+
     </target>
 </project>
