@@ -8,7 +8,6 @@ package com.tagtraum.macos.music;
 
 import com.tagtraum.japlscript.Reference;
 import com.tagtraum.japlscript.execution.JaplScriptException;
-import com.tagtraum.japlscript.language.Picture;
 import com.tagtraum.japlscript.language.Tdta;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -101,15 +100,7 @@ public class TestApplication {
         final Application application = Application.getInstance();
         try {
             final Track currentTrack = application.getCurrentTrack();
-
-            // get the index of the artwork *after* the last artwork
-            final int addIndex = currentTrack.countArtworks();
-            // create a location specifier for the new artwork
-            final Artwork newArtwork = currentTrack.getArtwork(addIndex);
-
-            // fill the artwork with data, which effectively stores it
-            final Tdta tdta = new Tdta(Paths.get("current_artwork.jpeg"), newArtwork.getApplicationReference());
-            newArtwork.setData(tdta.cast(Picture.class));
+            currentTrack.addArtwork(Paths.get("current_artwork.jpeg"));
         } catch(JaplScriptException e) {
             System.out.println("No track loaded (we assume).");
         }

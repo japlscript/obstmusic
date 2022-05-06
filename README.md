@@ -100,12 +100,9 @@ Or this:
 
 ```java
 import com.tagtraum.macos.music.Application;
-import com.tagtraum.japlscript.Reference;
-import com.tagtraum.japlscript.execution.JaplScriptException;
-import com.tagtraum.japlscript.language.Tdta;
+import com.tagtraum.macos.music.Track;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -120,16 +117,8 @@ public class AddArtworkToCurrentTrack {
         // get currently playing track
         final Track currentTrack = application.getCurrentTrack();
 
-        // get the index of the artwork *after* the last artwork
-        final int addIndex = currentTrack.countArtworks();
-        // create a location specifier for the new artwork
-        final Artwork newArtwork = currentTrack.getArtwork(addIndex);
-
-        // read the artwork file as type data (tdta)
-        final Tdta tdta = new Tdta(newArtworkFile, newArtwork.getApplicationReference());
-        // fill the artwork with data, which effectively stores it
-        // to do so, we need to cast to Picture, to please static typing 
-        newArtwork.setData(tdta.cast(Picture.class));
+        // add artwork
+        currentTrack.addArtwork(newArtworkFile);
     }
 }
 ```
