@@ -1,3 +1,8 @@
+- 0.9.7
+
+  - Added `addArtwork()` method to `Track`.
+
+
 - 0.9.6
 
   - Added `add()` to list of methods that needs cardinality fixing
