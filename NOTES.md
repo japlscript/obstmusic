@@ -1,6 +1,7 @@
 - 0.9.7
 
   - Added `addArtwork()` method to `Track`.
+  - Moved to JaplScript 3.4.12
 
 
 - 0.9.6
