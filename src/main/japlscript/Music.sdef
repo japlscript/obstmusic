@@ -96,6 +96,13 @@
 			<access-group identifier="com.apple.Music.library.read-write" access="rw"/>
 			<direct-parameter type="item" description="the shared track, URL track or playlist to download"/>
 		</command>
+		<command name="export" code="hookExpt" description="export a source or playlist">
+			<access-group identifier="com.apple.Music.library.read" access="r"/>
+			<direct-parameter type="item" description="the source or playlist to export"/>
+			<parameter name="as" code="pExF" type="eExF" optional="yes" description="the format to export for a playlist"/>
+			<parameter name="to" code="insh" type="file" optional="yes" description="the destination of the export"/>
+			<result type="text" description="the exported data for the source or playlist, if not written to a file"/>
+		</command>
 		<command name="fast forward" code="hookFast" description="skip forward in a playing track">
 			<access-group identifier="com.apple.Music.playback"/>
 		</command>
@@ -342,7 +349,7 @@
 			<property name="persistent ID" code="pPIS" type="text" access="r" description="the id of the item as a hexadecimal string. This id does not change over time."/>
 			<property name="properties" code="pALL" type="record" description="every property of the item"/>
 		</class>
-		<class name="library playlist" code="cLiP" description="the master library playlist" inherits="playlist" plural="library playlists">
+		<class name="library playlist" code="cLiP" description="the main library playlist" inherits="playlist" plural="library playlists">
 			<access-group identifier="com.apple.Music.library.read" access="r"/>
 			<access-group identifier="com.apple.Music.library.read-write" access="rw"/>
 			<element type="file track"/>
@@ -361,7 +368,7 @@
 			<property name="disliked" code="pHat" type="boolean" description="is this playlist disliked?"/>
 			<property name="duration" code="pDur" type="integer" access="r" description="the total length of all tracks (in seconds)"/>
 			<property name="name" code="pnam" type="text" description="the name of the playlist"/>
-			<property name="loved" code="pLov" type="boolean" description="is this playlist loved?"/>
+			<property name="favorited" code="pLov" type="boolean" description="is this playlist favorited?"/>
 			<property name="parent" code="pPlP" type="playlist" access="r" description="folder which contains this playlist (if any)"/>
 			<property name="size" code="pSiz" type="integer" access="r" description="the total size of all tracks (in bytes)"/>
 			<property name="special kind" code="pSpK" type="eSpK" access="r" description="special playlist kind"/>
@@ -408,7 +415,7 @@
 			<property name="album" code="pAlb" type="text" description="the album name of the track"/>
 			<property name="album artist" code="pAlA" type="text" description="the album artist of the track"/>
 			<property name="album disliked" code="pAHt" type="boolean" description="is the album for this track disliked?"/>
-			<property name="album loved" code="pALv" type="boolean" description="is the album for this track loved?"/>
+			<property name="album favorited" code="pALv" type="boolean" description="is the album for this track favorited?"/>
 			<property name="album rating" code="pAlR" type="integer" description="the rating of the album for this track (0 to 100)"/>
 			<property name="album rating kind" code="pARk" type="eRtK" access="r" description="the rating kind of the album rating for this track"/>
 			<property name="artist" code="pArt" type="text" description="the artist/source of the track"/>
@@ -440,7 +447,7 @@
 			<property name="grouping" code="pGrp" type="text" description="the grouping (piece) of the track. Generally used to denote movements within a classical work."/>
 			<property name="kind" code="pKnd" type="text" access="r" description="a text description of the track"/>
 			<property name="long description" code="pLds" type="text" description="the long description of the track"/>
-			<property name="loved" code="pLov" type="boolean" description="is this track loved?"/>
+			<property name="favorited" code="pLov" type="boolean" description="is this track favorited?"/>
 			<property name="lyrics" code="pLyr" type="text" description="the lyrics of the track"/>
 			<property name="media kind" code="pMdK" type="eMdK" description="the media kind of the track"/>
 			<property name="modification date" code="asmo" type="date" access="r" description="the modification date of the content of this track"/>
@@ -578,8 +585,16 @@
 			<enumerator name="error" code="kErr"/>
 			<enumerator name="duplicate" code="kDup"/>
 			<enumerator name="subscription" code="kSub"/>
+			<enumerator name="prerelease" code="kPrR"/>
 			<enumerator name="no longer available" code="kRev"/>
 			<enumerator name="not uploaded" code="kUpP"/>
+		</enumeration>
+		<enumeration name="eExF" code="eExF">
+			<enumerator name="plain text" code="kTXT"/>
+			<enumerator name="Unicode text" code="kUCT"/>
+			<enumerator name="XML" code="kXML"/>
+			<enumerator name="M3U" code="kM3U"/>
+			<enumerator name="M3U8" code="kM38"/>
 		</enumeration>
 	</suite>
 	<suite name="Internet suite" code="gurl" description="Standard terms for Internet scripting">
