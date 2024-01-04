@@ -34,8 +34,6 @@ jobs:
 #       # But first dump the info about the database
         run: |
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" ".schema"
-          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "pragma table_info(access)"
-          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" -header "select * from policies"
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" -header "select * from access"
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, auth_value, auth_reason, auth_version, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 2, 0, 1, 1, 'com.apple.Music')"
           mvn -B install --file pom.xml
