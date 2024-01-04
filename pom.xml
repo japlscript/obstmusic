@@ -5,7 +5,7 @@
     <artifactId>obstmusic</artifactId>
     <packaging>jar</packaging>
     <name>Obstmusic</name>
-    <version>0.9.8</version>
+    <version>0.9.9</version>
     <description>Java API for the Apple Music app (macOS)</description>
     <url>https://github.com/japlscript/obstmusic</url>
     <inceptionYear>2021</inceptionYear>
