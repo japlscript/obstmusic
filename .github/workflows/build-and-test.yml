@@ -35,7 +35,7 @@ jobs:
         run: |
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" ".schema"
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "pragma table_info(access)"
-          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" ".headers on; select * from policy"
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" -header "select * from policies"
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 0, 'com.apple.Music')"
           mvn -B install --file pom.xml
       - run: mkdir staging && cp target/*.jar staging
