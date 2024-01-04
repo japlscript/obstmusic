@@ -31,10 +31,12 @@ jobs:
         shell: bash
         # Manipulate TCC, see https://github.com/actions/virtual-environments/issues/553#issuecomment-648109166
         # in order to allow AppleScript automation of Music.app
-#       # But first dump the info about the "access" table
+#       # But first dump the info about the database
         run: |
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" ".schema"
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "pragma table_info(access)"
-          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 1, 1, 0, 'com.apple.Music')"
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" ".headers on; select * from policy"
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, allowed, prompt_count, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 0, 'com.apple.Music')"
           mvn -B install --file pom.xml
       - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v2
