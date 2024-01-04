@@ -1,10 +1,10 @@
-- 0.9.8
+- 0.9.9
 
   - Moved to JaplScript 3.4.13
   - Updated `Music.sdef` to Music.app version 1.4.2.82 (*favorited* instead of *loved*)
 
 
-- 0.9.7
+- 0.9.7/0.9.8
 
   - Added `addArtwork()` method to `Track`.
   - Moved to JaplScript 3.4.12
