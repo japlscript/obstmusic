@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
-          java-version: 9
+          java-version: 21
           architecture: aarch64
 
       - name: Build/test code with Maven
