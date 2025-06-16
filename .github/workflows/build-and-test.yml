@@ -25,7 +25,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 9
-          architecture: x64
+          architecture: aarch64
 
       - name: Build/test code with Maven
         shell: bash

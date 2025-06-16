@@ -34,7 +34,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 9
-          architecture: x64
+          architecture: aarch64
           server-id: central
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD
